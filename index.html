@@ -35,52 +35,52 @@
         canvas.height = window.innerHeight
 
         function getPcolor() {
-            let r = Math.floor(Math.random() * 105) + 150  // Math.random() :0~1사이 숫자라서 *n 해주면 n가지 숫자 Math.floor: 정수 -> 150 ~ 255 사이 말하는 거
+            let r = Math.floor(Math.random() * 105) + 150
             let g = Math.floor(Math.random() * 105) + 150
             let b = Math.floor(Math.random() * 105) + 150
-            return `rgba(${r}, ${g}, ${b}, 0.5)`        // 함수 호출 시 이렇게 돌려줌
+            return `rgba(${r}, ${g}, ${b}, 0.5)`
         }
 
         class Bubble {
             constructor() {
                 this.r = 80
-                this.x = Math.random() * canvas.width    // width안에서 랜덤으로 나올것
+                this.x = Math.random() * canvas.width
                 this.y = Math.random() * canvas.height
-                this.dx = (Math.random() - 0.5) * 3      // 0.5보다 작은숫자에서 빼면 -도 나옴 (-1.5 부터 1.5까지)
+                this.dx = (Math.random() - 0.5) * 3
                 this.dy = (Math.random() - 0.5) * 3
                 this.color = getPcolor()
             }
 
             draw() {
-                let centerX = this.x     // 값이 변경 될 걸 대비해서 변수에 넣음
+                let centerX = this.x
                 let centerY = this.y
                 let radius = this.r
 
                 let raG = ctx.createRadialGradient(
-                    centerX - 20,           // 큰 원의 중심에서 -20만큼 왼쪽으로
+                    centerX - 20,
                     centerY - 20,
                     radius * 0.1,
                     centerX, centerY, radius
                 )
 
                 raG.addColorStop(0, 'white')
-                raG.addColorStop(0.2, 'rgba(255, 255, 255, 0.7)')   // 살짝 투명한 흰색
+                raG.addColorStop(0.2, 'rgba(255, 255, 255, 0.7)')
                 raG.addColorStop(0.8, this.color)
-                raG.addColorStop(1, 'rgba(255, 255, 255, 0.2)')     // 거의 안 보이게 투명한 흰색
+                raG.addColorStop(1, 'rgba(255, 255, 255, 0.2)')
 
                 ctx.beginPath()
                 ctx.arc(centerX, centerY, radius, 0, Math.PI * 2)
                 ctx.fillStyle = raG
                 ctx.fill()
 
-                ctx.lineWidth = 0.7   // 원테두리 하면 이쁨
+                ctx.lineWidth = 0.7
                 ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)'
                 ctx.stroke()
             }
 
             move() {
-                this.x += this.dx
-                this.y += this.dy
+                this.x += this.dx * 1.2
+                this.y += this.dy * 1.2
 
                 if (this.x + this.r > canvas.width || this.x - this.r < 0) { this.dx *= -1 }
                 if (this.y + this.r > canvas.height || this.y - this.r < 0) { this.dy *= -1 }
@@ -88,7 +88,7 @@
         }
 
         let bubbles = []
-        for (i = 0; i < 10; i++) {
+        for (i = 0; i < 15; i++) {
             bubbles.push(new Bubble())
         }
 
